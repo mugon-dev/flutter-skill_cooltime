@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:skill_cooltime/src/app.dart';
+import 'package:skill_cooltime/src/components/progress_animate_container.dart';
 import 'package:skill_cooltime/src/controller/button_controller.dart';
 
 class CooltimeButton extends StatefulWidget {
@@ -43,16 +44,19 @@ class _CooltimeButtonState extends State<CooltimeButton>
         onTap: _actionButton,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(15),
-          child: Container(
-            width: 100,
-            height: 100,
-            color: isActive
-                ? Colors.grey.withOpacity(0.5)
-                : Colors.black.withOpacity(0.8),
-            child: Center(
-              child: Text(
-                "Button",
-                style: TextStyle(fontSize: 20),
+          child: ProgressAnimateContainer(
+            width: 100.0,
+            height: 100.0,
+            progress: _progress,
+            child: Container(
+              width: 100,
+              height: 100,
+              color: Colors.grey.withOpacity(0.4),
+              child: Center(
+                child: Text(
+                  "Button",
+                  style: TextStyle(fontSize: 20),
+                ),
               ),
             ),
           ),

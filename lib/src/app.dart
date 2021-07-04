@@ -28,8 +28,11 @@ class _AppState extends State<App> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            DisplayView(),
-            CooltimeButton(),
+            Expanded(child: Center(child: DisplayView())),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 40.0),
+              child: CooltimeButton(),
+            ),
           ],
         ),
       ),
