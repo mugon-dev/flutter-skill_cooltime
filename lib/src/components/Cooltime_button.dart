@@ -67,9 +67,6 @@ class _CooltimeButtonState extends State<CooltimeButton>
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(
-          maxHeight: widget.buttonSize.height,
-          maxWidth: widget.buttonSize.width),
       child: GestureDetector(
         onTap: _actionButton,
         child: ClipRRect(
