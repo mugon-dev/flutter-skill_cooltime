@@ -3,23 +3,8 @@ import 'package:skill_cooltime/src/components/Cooltime_button.dart';
 import 'package:skill_cooltime/src/components/display_view.dart';
 import 'package:skill_cooltime/src/controller/button_controller.dart';
 
-// 전역으로 선언
-ButtonController buttonController = ButtonController();
-
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
-
-  @override
-  _AppState createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    buttonController.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +13,28 @@ class _AppState extends State<App> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(child: Center(child: DisplayView())),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 40.0),
-              child: CooltimeButton(),
+            Expanded(child: DisplayView()),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CooltimeButton(
+                  buttonSize: Size(70, 70),
+                  skillAnimationTime: 800,
+                  buttonName: '',
+                  coolTime: 20,
+                  type: ButtonType.SKILL1,
+                ),
+                SizedBox(width: 10),
+                CooltimeButton(
+                  buttonSize: Size(70, 70),
+                  skillAnimationTime: 2800,
+                  buttonName: '',
+                  coolTime: 5,
+                  type: ButtonType.SKILL2,
+                ),
+              ],
             ),
+            SizedBox(height: 20),
           ],
         ),
       ),

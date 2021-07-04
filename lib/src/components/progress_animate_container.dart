@@ -18,13 +18,14 @@ class ProgressAnimateContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxWidth: 100, maxHeight: 100),
       width: this.width,
       height: this.height,
-      child: CustomPaint(
-        painter: ProgressAnimatePainter(progress!),
-        child: this.child,
-      ),
+      child: progress == 0
+          ? child
+          : CustomPaint(
+              foregroundPainter: ProgressAnimatePainter(progress!),
+              child: this.child,
+            ),
     );
   }
 }
