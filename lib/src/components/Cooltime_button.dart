@@ -9,8 +9,32 @@ class CooltimeButton extends StatefulWidget {
   _CooltimeButtonState createState() => _CooltimeButtonState();
 }
 
-class _CooltimeButtonState extends State<CooltimeButton> {
+class _CooltimeButtonState extends State<CooltimeButton>
+    with SingleTickerProviderStateMixin {
   bool isActive = true;
+
+  AnimationController? animationController;
+  Animation<double>? animation;
+  int delay = 3;
+  double _progress = 0.0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    animationController =
+        AnimationController(vsync: this, duration: Duration(seconds: delay));
+    animation = Tween<double>(begin: 0, end: 1.0).animate(
+      new CurvedAnimation(parent: animationController!, curve: Curves.linear),
+    )..addListener(() {
+        setState(() {
+          _progress = animation!.value;
+          if (animation!.isCompleted) {
+            _changeState(true);
+          }
+        });
+      });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +70,8 @@ class _CooltimeButtonState extends State<CooltimeButton> {
   void _actionButton() {
     if (isActive) {
       _changeState(false);
+      animationController!.forward(from: 0);
       buttonController.action(ButtonType.ACTION1);
-      Future.delayed(Duration(seconds: 2), () {
-        _changeState(true);
-      });
     }
   }
 }
