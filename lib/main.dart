@@ -10,6 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return App();
+    return MaterialApp(
+      title: 'skill cooltime',
+      theme: ThemeData(primaryColor: Colors.blue),
+      home: App(),
+    );
   }
 }

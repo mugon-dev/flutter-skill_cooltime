@@ -14,9 +14,11 @@ class CooltimeButton extends StatelessWidget {
             width: 100,
             height: 100,
             color: Colors.grey.withOpacity(0.5),
-            child: Text(
-              "Button",
-              style: TextStyle(fontSize: 20),
+            child: Center(
+              child: Text(
+                "Button",
+                style: TextStyle(fontSize: 20),
+              ),
             ),
           ),
         ),
