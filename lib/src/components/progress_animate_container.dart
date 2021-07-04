@@ -18,13 +18,15 @@ class ProgressAnimateContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(maxWidth: 100, maxHeight: 100),
       width: this.width,
       height: this.height,
-      child: CustomPaint(
-        painter: ProgressAnimatePainter(progress!),
-        child: this.child,
-      ),
+      child: progress == 0
+          ? child
+          : CustomPaint(
+              size: Size(25, (50 * 1.1666666666666667).toDouble()),
+              foregroundPainter: ProgressAnimatePainter(progress!),
+              child: child,
+            ),
     );
   }
 }
@@ -37,6 +39,7 @@ class ProgressAnimatePainter extends CustomPainter {
     var paint = Paint();
     paint.color = Colors.black.withOpacity(0.8);
     paint.style = PaintingStyle.fill;
+    paint.strokeWidth = 1;
 
     Offset center = Offset(size.width / 2, size.height / 2);
     double arcAngle = 2 * pi * (1 - progress);

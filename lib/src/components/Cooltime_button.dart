@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:skill_cooltime/src/app.dart';
 import 'package:skill_cooltime/src/components/progress_animate_container.dart';
 import 'package:skill_cooltime/src/controller/button_controller.dart';
 
 class CooltimeButton extends StatefulWidget {
-  const CooltimeButton({Key? key}) : super(key: key);
+  final ButtonType type;
+  final int coolTime;
+  final int skillAnimationTime;
+  final String buttonName;
+  final Size buttonSize;
+  CooltimeButton(
+      {Key? key,
+      required this.type,
+      required this.buttonName,
+      required this.buttonSize,
+      required this.coolTime,
+      required this.skillAnimationTime})
+      : super(key: key);
 
   @override
   _CooltimeButtonState createState() => _CooltimeButtonState();
@@ -16,14 +27,14 @@ class _CooltimeButtonState extends State<CooltimeButton>
 
   AnimationController? animationController;
   Animation<double>? animation;
-  int delay = 3;
   double _progress = 0.0;
+  String skillName = "";
 
   @override
   void initState() {
     // TODO: implement initState
-    animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: delay));
+    animationController = AnimationController(
+        vsync: this, duration: Duration(seconds: widget.coolTime));
     animation = Tween<double>(begin: 0, end: 1.0).animate(
       new CurvedAnimation(parent: animationController!, curve: Curves.linear),
     )..addListener(() {
@@ -34,7 +45,23 @@ class _CooltimeButtonState extends State<CooltimeButton>
           }
         });
       });
+
+    _setSkillName();
     super.initState();
+  }
+
+  void _setSkillName() {
+    switch (widget.type) {
+      case ButtonType.IDLE:
+        // TODO: Handle this case.
+        break;
+      case ButtonType.SKILL1:
+        skillName = "skill1";
+        break;
+      case ButtonType.SKILL2:
+        skillName = "skill2";
+        break;
+    }
   }
 
   @override
@@ -43,21 +70,14 @@ class _CooltimeButtonState extends State<CooltimeButton>
       child: GestureDetector(
         onTap: _actionButton,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(10),
           child: ProgressAnimateContainer(
-            width: 100.0,
-            height: 100.0,
             progress: _progress,
+            width: widget.buttonSize.width,
+            height: widget.buttonSize.height,
             child: Container(
-              width: 100,
-              height: 100,
               color: Colors.grey.withOpacity(0.4),
-              child: Center(
-                child: Text(
-                  "Button",
-                  style: TextStyle(fontSize: 20),
-                ),
-              ),
+              child: Image.asset("assets/$skillName.jpg", fit: BoxFit.fitWidth),
             ),
           ),
         ),
@@ -75,7 +95,10 @@ class _CooltimeButtonState extends State<CooltimeButton>
     if (isActive) {
       _changeState(false);
       animationController!.forward(from: 0);
-      buttonController.action(ButtonType.ACTION1);
+      ButtonController.to.action(widget.type);
+      Future.delayed(Duration(milliseconds: widget.skillAnimationTime), () {
+        ButtonController.to.action(ButtonType.IDLE);
+      });
     }
   }
 }

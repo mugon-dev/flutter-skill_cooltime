@@ -1,20 +1,13 @@
-import 'dart:async';
+import 'package:get/get.dart';
 
-class ButtonController {
-  //bloc 패턴
-  //어떤 버튼을 눌렀는지 확인
-  final StreamController<ButtonType> _actionButtonSubject =
-      StreamController<ButtonType>();
+class ButtonController extends GetxController {
+  static ButtonController get to => Get.find();
 
-  Stream<ButtonType> get actionButtonStream => _actionButtonSubject.stream;
+  Rx<ButtonType> actionButton = ButtonType.IDLE.obs;
 
   action(ButtonType type) {
-    _actionButtonSubject.sink.add(type);
-  }
-
-  dispose() {
-    _actionButtonSubject.close();
+    actionButton(type);
   }
 }
 
-enum ButtonType { ACTION1, ACTION2 }
+enum ButtonType { IDLE, SKILL1, SKILL2 }
